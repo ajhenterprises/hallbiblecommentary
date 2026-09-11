@@ -106,3 +106,9 @@ The initial local integration checks exercise unauthorized and cross-origin reje
 - Large catalog search currently filters server-side records; a larger collection should move to PostgreSQL full-text search and paginated repository queries.
 - Basic request throttling limits repeated submissions by email; add deployment-level rate limiting or CAPTCHA before significant public traffic.
 - iOS installation requires Safari → Share → Add to Home Screen. Device-specific PWA and native share behavior should be confirmed on a real iPhone.
+
+## Categories and SEO controls
+
+Writing desk → Categories & tags lists categories, topics, people, and series, including labels entered directly on teaching. Rename propagates to linked records; delete removes the label while preserving the content. Existing open entry editors must reload after a rename.
+
+Writing desk → SEO settings controls any public page path, including the homepage, archives and About pages. Saved commentary/articles and sermon details also have SEO panels. SEO saves separately from content; blank values use defaults. Set search title, description, HTTPS social image and noindex. Canonical URLs remain stable and automatic. Noindex pages are excluded from the sitemap but remain publicly accessible. These settings are stored in the existing site_settings table; no database migration is needed.
