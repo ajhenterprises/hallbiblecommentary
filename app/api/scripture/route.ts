@@ -1,0 +1,2 @@
+import {parseReference,chapterText,referenceLabel} from '../../../lib/bible';
+export async function GET(r:Request){const ref=parseReference(new URL(r.url).searchParams.get('reference')||'');if(!ref)return Response.json({error:'Enter a valid Scripture reference.'},{status:400});return Response.json({label:referenceLabel(ref),reference:referenceLabel(ref),url:`/bible/${ref.book}/${ref.chapter}#verse-${ref.start}`,verses:chapterText(ref.book,ref.chapter).filter(v=>v.verse>=ref.start&&v.verse<=ref.end)})}

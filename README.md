@@ -112,3 +112,34 @@ The initial local integration checks exercise unauthorized and cross-origin reje
 Writing desk → Categories & tags lists categories, topics, people, and series, including labels entered directly on teaching. Rename propagates to linked records; delete removes the label while preserving the content. Existing open entry editors must reload after a rename.
 
 Writing desk → SEO settings controls any public page path, including the homepage, archives and About pages. Saved commentary/articles and sermon details also have SEO panels. SEO saves separately from content; blank values use defaults. Set search title, description, HTTPS social image and noindex. Canonical URLs remain stable and automatic. Noindex pages are excluded from the sitemap but remain publicly accessible. These settings are stored in the existing site_settings table; no database migration is needed.
+
+## Rich editor, policies, and verified source library
+
+The admin editor uses Tiptap, matching The Ministry Study's core formatting tools: headings, bold/italic/underline/strike/highlight, lists/checklists, quotation, divider, alignment, links, image upload or URL, Scripture insertion, and library insertion. It adds tables, full-screen writing, HTML/text export, preview/source editing, and body recovery history. Existing Markdown remains readable. Rich content carries `<!--hall-rich-->` and is sanitized at save and render. Uploaded images remain private until referenced by published content. YouTube players load only after the reader chooses to load them.
+
+The footer includes Aaron's copyright, Privacy, Terms, Content Policy, Cookie Notice, and a reopenable disclaimer. Policy text can be overridden in Website Settings → Pages. Review the operator contact and published policies whenever actual data practices change.
+
+### Source Library workflow
+
+1. Upload a manuscript in Sermons or publish an original article/commentary. Source Library indexes these existing records; it never fetches external links.
+2. Review each segment. All unverified prose defaults to unknown. Quotations, links, citation cues and embedded material are flagged; automated detection is advisory, never proof of authorship.
+3. Manually classify only words you have verified as original. A segment containing a source warning requires a written explanation before it may be marked original. Assign its Scripture passage and whether it is substantial teaching, supporting Scripture, or a passing mention.
+4. Develop commentary from verified substantial teaching. Priority is approved commentary, sermons, articles, other verified writing. Source-preserving mode accepts only supplied source indices from the model, not invented prose. Without an AI key it uses deterministic source ordering. It deliberately does not provide unconstrained AI rewriting.
+5. Review the proposal, source excerpts, and changes. Save edits, acknowledge source/theology review, then explicitly Approve & Publish. Proposed updates remain separate from the current public record. Changed/reclassified sources or a changed live revision invalidate approval.
+6. Published history is append-only; rollback publishes a previous body as a new version. SEO/tag-only changes do not advance the substantive last-updated date. Saving a draft revision of a published commentary creates a proposal while its live body remains unchanged.
+
+The private voice profile is a versioned reference profile of manually verified original segments, with separate sermon/article/commentary vocabulary, sentence-length measures and examples. It is not fine-tuning, does not infer unexpressed beliefs, and never automatically treats quoted text as Aaron-authored. Manual authorship verification remains essential: software cannot reliably determine the origin of every unmarked quotation.
+
+New records are stored under private namespaces in the existing `site_settings` table: `kb:`, `kb-snapshot:`, `kb-verification:`, `voice:`, `embedding:`, `proposal:`, `version:`, `live-meta:`, `generation-log:`, `transcript:`, `editor:`, and `media:`. No public endpoint returns private records. Existing Supabase RLS denies browser-level table access. Generation has no SQL tools or publication capability. Only authenticated administrator routes can publish. Version immutability triggers are installed on first authorized use (requires the configured database role to create functions/triggers); `supabase/version-history.sql` provides the equivalent explicit migration. SQLite applies `drizzle/0004_version_immutability.sql` automatically in local demo mode.
+
+### External AI configuration and current limits
+
+- `AI_API_KEY`: server-only OpenAI API key. Never put it in a `NEXT_PUBLIC_` variable.
+- `AI_MODEL`: optional ordering model; existing default `gpt-4.1-mini`.
+- Semantic ranking uses `text-embedding-3-small` only for verified eligible source segments and the administrator's query, caching 256-dimensional vectors privately. Without a key, passage and keyword ranking remains available.
+- Recording transcription uses `whisper-1`, retaining transcript segments/timestamps internally. The current multipart route accepts up to 4 MB to fit Vercel's request limit; longer recordings must be compressed/split or supplied as transcripts. Provider integration cannot be exercised without a valid API key.
+- YouTube URLs are metadata only. Paste an authorized transcript or upload the original recording. No YouTube scraping or automatic caption retrieval is implemented.
+- Theological consistency is a required human review step. The current review UI identifies textual differences and duplicates; it does not claim automated theological-conflict adjudication.
+- This is a working source-preserving foundation. Unconstrained prose rewriting, long-recording background ingestion, authorized YouTube caption retrieval, and richer automatic style/conflict analysis remain separate extensions, not claims of completed behavior.
+
+Verification: production build and TypeScript checks, plus `work/editor-test.mjs` and `work/knowledge-test.mjs` exercise local-only fixtures. The latter tests denied anonymous access, unknown-default classification, quotation/link exclusion, verified-only profile/generation, explicit approval, live/draft isolation, metadata date stability, immutable versions, and rollback. Test fixtures must never be published to the production library.

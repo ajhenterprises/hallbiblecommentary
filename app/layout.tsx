@@ -2,6 +2,7 @@ import {getSite} from "../lib/site";
 import SiteProvider from "./site-provider";
 import type { Metadata } from "next";
 import "./globals.css";
+import ReadingDisclaimer from './reading-disclaimer';
 import PWA from "./pwa";
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default async function RootLayout({
   const site=await getSite();
   return (
     <html lang="en">
-      <body className="antialiased"><SiteProvider value={site}><a href="#main-content" className="skip-link">Skip to content</a><div id="main-content">{children}</div><PWA/></SiteProvider></body>
+      <body className="antialiased"><SiteProvider value={site}><a href="#main-content" className="skip-link">Skip to content</a><div id="main-content">{children}</div><PWA/><ReadingDisclaimer/></SiteProvider></body>
     </html>
   );
 }
