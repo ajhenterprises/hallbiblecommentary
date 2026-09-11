@@ -1,0 +1,4 @@
+'use client';
+import ReactMarkdown from 'react-markdown';import remarkGfm from 'remark-gfm';import books from '../data/books.json';
+export function linkScriptures(text:string){const names=[...books].sort((a,b)=>b.name.length-a.name.length).map(b=>b.name).join('|');const re=new RegExp('\\b('+names+')\\s+(\\d+):(\\d+)(?:[–-](\\d+))?','gi');return text.split(/(```[\s\S]*?```|`[^`]*`|\[[^\]]*\]\([^)]*\))/g).map((part,i)=>i%2?part:part.replace(re,(m,name,c,v)=>{const b=books.find(b=>b.name.toLowerCase()===name.toLowerCase());return `[${m}](/bible/${b?.slug}/${c}#verse-${v})`})).join('')}
+export default function Markdown({text}:{text:string}){return <div className="markdown"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{a:({href,children})=><a href={href} rel={href?.startsWith('http')?'noopener noreferrer':undefined}>{children}</a>}}>{linkScriptures(text)}</ReactMarkdown></div>}

@@ -1,0 +1,14 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build:vercel",
+  "installCommand": "npm ci --ignore-scripts",
+  "outputDirectory": ".next-vercel",
+  "functions": {
+    "app/api/generate/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/sermons/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}

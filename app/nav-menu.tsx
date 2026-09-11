@@ -1,0 +1,3 @@
+'use client';
+import {ChevronDown} from 'lucide-react';import {DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from '../components/ui/dropdown-menu';
+export default function NavMenu({label,links}:{label:string;links:string[][]}){return <DropdownMenu><DropdownMenuTrigger className="nav-dropdown">{label}<ChevronDown size={13}/></DropdownMenuTrigger><DropdownMenuContent className="nav-menu" align="end">{links.map(([title,url])=><DropdownMenuItem key={url} asChild><a href={url} target={url.startsWith('https:')?'_blank':undefined} rel={url.startsWith('https:')?'noopener noreferrer':undefined}>{title}</a></DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu>}

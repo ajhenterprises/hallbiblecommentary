@@ -78,7 +78,7 @@ Provenance retains source IDs, character spans, original excerpts, and original 
 
 ## Content and attribution
 
-Brand: `lib/config.ts`. Commentary growth disclosure: `lib/editorial.ts`. About/FAQ/permissions copy: `app/about-pages.tsx`. No doctrine statement, speaking availability, fees, awards, or book titles are invented. The permissions page requests written permission for reproduction; it does not copy Enduring Word’s policy or grant a blanket republication license.
+Manage branding, homepage sections, disclosure, About/FAQ/permissions copy, menu links, and book listings in Writing desk → Website settings. Defaults remain in `lib/site-defaults.ts` and `app/about-pages.tsx`. No doctrine statement, speaking availability, fees, awards, or book titles are invented. The permissions page requests written permission for reproduction; it does not copy Enduring Word’s policy or grant a blanket republication license.
 
 Editors can mark original, mixed, or external material and add author, source title, HTTPS/HTTP link, and attribution/permission note. Use Markdown blockquotes to identify specific quoted sections in the body. Attribution does not itself establish permission.
 
@@ -95,7 +95,7 @@ npm run build:vercel
 npx tsc --noEmit
 ```
 
-The initial local integration checks exercise unauthorized and cross-origin rejection, admin sign-in, sermon paste, source-only draft segmentation, provenance, publication, related verse lookup, article attribution, public search, invalid range rejection, and test-record cleanup. Additional checks cover uploads, metadata-only public sermons, inquiries, article filters, and public route responses. External Supabase and AI credentials still require live integration verification.
+The initial local integration checks exercise unauthorized and cross-origin rejection, admin sign-in, sermon paste, source-only draft segmentation, provenance, publication, related verse lookup, article attribution, public search, invalid range rejection, and test-record cleanup. Extended checks for uploads, metadata-only public sermons, inquiries, article filters, and public route responses have not yet run; automatic approval review blocked that test run. External Supabase and AI credentials still require live integration verification.
 
 ## Practical limits
 

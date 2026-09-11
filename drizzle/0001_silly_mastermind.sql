@@ -1,0 +1,1 @@
+ALTER TABLE `content` ADD `attribution` text DEFAULT '{"origin":"aaron","author":"","title":"","url":"","note":""}' NOT NULL;
