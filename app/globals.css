@@ -23,3 +23,5 @@
 .reading-disclaimer [data-slot="dialog-close"]{color:#173b65;min-width:44px;min-height:44px;display:grid;place-items:center;top:8px;right:8px}
 .reading-disclaimer .button.primary{background:#174f86;color:#fff;min-height:48px}
 @media(max-width:480px){.reading-disclaimer[data-slot="dialog-content"]{padding:24px 20px}.reading-disclaimer [data-slot="dialog-title"]{font-size:23px}}
+
+.verification-badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:800;letter-spacing:.07em;margin:0 6px}.verification-badge.verified{background:#dcfce7;color:#166534;border:1px solid #86efac}.verification-badge.review{background:#fff7ed;color:#9a3412;border:1px solid #fdba74}
