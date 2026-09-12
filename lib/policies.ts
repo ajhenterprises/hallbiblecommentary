@@ -1,3 +1,4 @@
+export const trustedSourceNotice = 'Some Bible commentary may also come from trusted sources and is used with permission. All such material is clearly labeled, with credit to its author and a link or reference to the original source.';
 export const policyLinks = [
   ['Privacy Policy','/privacy'], ['Terms of Use','/terms'],
   ['Content Policy','/content-policy'], ['Cookie Notice','/cookies'],
@@ -68,6 +69,8 @@ The World English Bible is the site’s public-domain Bible text. Commentary is 
 This commentary reflects Aaron’s ongoing walk with the Lord. As he continues to study Scripture, pray, and grow in understanding, entries may be clarified, expanded, corrected, or revised. Readers are encouraged to return to Scripture as their foundation and to approach these reflections with discernment and humility.
 
 ## Original teaching and outside sources
+Some Bible commentary may also come from trusted sources and is used with permission. All such material is clearly labeled, with credit to its author and a link or reference to the original source. Permission to display this material does not make it Aaron-authored content or eligible to inform his private voice profile.
+
 Original teaching is identified with Aaron Joseph Hall. When a page includes material that did not originate with Aaron, it should clearly identify the author or source, distinguish quotations from original writing, and link to the original source where available. Attribution is not permission to reproduce someone else’s work. The rights of original creators must still be respected.
 
 An outside-source notice does not mean Aaron endorses every view expressed by that source. Material labeled as sample or demonstration content is not a statement of Aaron’s theology.
