@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS subscribers (id TEXT PRIMARY KEY,email TEXT NOT NULL UNIQUE,first_name TEXT NOT NULL DEFAULT '',status TEXT NOT NULL DEFAULT 'active',source_type TEXT NOT NULL DEFAULT 'footer',source_url TEXT NOT NULL DEFAULT '',tags TEXT NOT NULL DEFAULT '[]',consent_at TEXT NOT NULL,unsubscribe_token TEXT NOT NULL UNIQUE,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS subscriber_status ON subscribers(status);
+CREATE INDEX IF NOT EXISTS subscriber_source ON subscribers(source_type);
+CREATE TABLE IF NOT EXISTS subscriber_events (id TEXT PRIMARY KEY,subscriber_id TEXT NOT NULL REFERENCES subscribers(id),kind TEXT NOT NULL,detail TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS subscriber_events_lookup ON subscriber_events(subscriber_id,created_at);
+CREATE TABLE IF NOT EXISTS subscriber_tags (id TEXT PRIMARY KEY,name TEXT NOT NULL UNIQUE,provider_group TEXT);
+CREATE TABLE IF NOT EXISTS subscriber_tag_links (subscriber_id TEXT NOT NULL REFERENCES subscribers(id),tag_id TEXT NOT NULL REFERENCES subscriber_tags(id),PRIMARY KEY(subscriber_id,tag_id));
+CREATE TABLE IF NOT EXISTS subscriber_providers (subscriber_id TEXT NOT NULL REFERENCES subscribers(id),provider TEXT NOT NULL,external_id TEXT,last_synced_at TEXT,status TEXT NOT NULL DEFAULT 'not_synced',PRIMARY KEY(subscriber_id,provider));
+CREATE TABLE IF NOT EXISTS signup_limits (key TEXT PRIMARY KEY,attempts INTEGER NOT NULL,expires_at TEXT NOT NULL);
+ALTER TABLE subscribers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE subscriber_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE subscriber_tags ENABLE ROW LEVEL SECURITY;
+ALTER TABLE subscriber_tag_links ENABLE ROW LEVEL SECURITY;
+ALTER TABLE subscriber_providers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE signup_limits ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON subscribers,subscriber_events,subscriber_tags,subscriber_tag_links,subscriber_providers,signup_limits FROM anon, authenticated;

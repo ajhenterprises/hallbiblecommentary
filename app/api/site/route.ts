@@ -6,7 +6,7 @@ export async function GET(r:Request){try{await authorize(r);return Response.json
 export async function POST(r:Request){try{
   await authorize(r);const incoming=await r.json() as any;const x:any={};
   for(const key of Object.keys(defaultSite))x[key]=incoming[key]??(defaultSite as any)[key];
-  for(const key of ['brandName','authorName','homeTitle','homeIntroduction','homeAbout','disclosure'])if(typeof x[key]!=='string'||!x[key].trim()||x[key].length>4000)throw Error('Please fill in each site text field (maximum 4,000 characters).');
+  for(const key of ['subscribeTitle','subscribeText','brandName','authorName','homeTitle','homeIntroduction','homeAbout','disclosure'])if(typeof x[key]!=='string'||!x[key].trim()||x[key].length>4000)throw Error('Please fill in each site text field (maximum 4,000 characters).');
   for(const key of ['showCommentary','showArticles','showSermons'])x[key]=x[key]===true;
   for(const key of ['primaryLinks','aboutLinks','resourceLinks']){if(!Array.isArray(x[key])||x[key].length>12)throw Error('Use at most 12 links in each menu.');for(const item of x[key])if(!Array.isArray(item)||item.length!==2||typeof item[0]!=='string'||!item[0].trim()||item[0].length>80||typeof item[1]!=='string'||!safeLink(item[1]))throw Error('Each menu link needs a name and a local path or HTTPS address.');}
   const paths=['about','about/aaron-joseph-hall','about/permissions','about/faq','about/speaking','resources/books','privacy','terms','content-policy','cookies'];
