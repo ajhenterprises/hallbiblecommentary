@@ -1,1 +1,7 @@
-m«ëˆ§½©buªàºg§¶Ç+Š›lþh ­«^²æìr¸›z»&ŽÅ,j›jÇºà7an{¦Š)ßŠW¨¢ë_ŠW›n·š‘ºÞjG§r‡^vËkŠx"žÚ'ºg!j¶œµêåŠw¬×^r‡^uç(uë"ž›­†¥¥Ø¬¦V²¶¬™ë,j¢Šzn¶)éº×â•ç^}«¥µú+²×bžŠ.¶›­¢ëiº×â•ç^}«¥µú+²×hº
+import {readFile} from 'node:fs/promises';
+// Run in Vercel's build environment; credentials never enter the browser bundle.
+if(process.env.VERCEL && process.env.DATABASE_URL){
+ const {default:postgres}=await import('postgres');
+ const sql=postgres(process.env.DATABASE_URL,{ssl:'require',max:1,prepare:false});
+ try{const migration=await readFile(new URL('../supabase/subscribers.sql',import.meta.url),'utf8');await sql.begin(async tx=>{await tx`SELECT pg_advisory_xact_lock(92130913)`;await tx.unsafe(migration)});console.log('Subscriber schema and private-access policies verified.')}catch(error){console.warn('Subscriber schema migration skipped; deployment will continue.',error?.message||error)}finally{await sql.end()}
+}else if(process.env.VERCEL){console.warn('DATABASE_URL is not configured; skipping subscriber schema migration during build. Configure it before using subscriber storage.')}
