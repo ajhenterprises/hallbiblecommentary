@@ -54,3 +54,6 @@
 /* Imported manuscripts often use bold-only paragraphs as section labels. */
 .markdown p:has(>strong:only-child),.rich-document p:has(>strong:only-child){margin-top:1.75em;margin-bottom:.65em}
 .markdown p:first-child:has(>strong:only-child),.rich-document p:first-child:has(>strong:only-child){margin-top:0}
+
+/* Keep mobile editor gestures on the page rather than a nested toolbar scroller. */
+@media(max-width:600px){.rich-toolbar{max-height:none;overflow:visible}.admin-shell input,.admin-shell textarea,.admin-shell select{font-size:16px}.rich-status{min-height:88px}}
